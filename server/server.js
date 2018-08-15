@@ -1,26 +1,25 @@
+// Importing express module
 const express = require('express')
 const app = express()
 
-const MongoClient = require('mongodb').MongoClient
+// Importing config file/s
+const databaseConfig = require('./config/database')
 
-app.get('/question', (req, res) => {
-    MongoClient.connect(
-        'mongodb://localhost:27017/ae',
-        (err, client) => {
-            if (err) throw err
+// Creating mongoose connection
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise;
 
-            const db = client.db('ae')
-            const n = db.collection('questions').count()
-            const r = Math.floor(Math.random() * n)
+mongoose.connect(databaseConfig.url)
 
-            db.collection('questions').find().limit(1).skip(r).toArray(
-                (err, result) => {
-                    if (err) throw err
+// Starting the server
+app.listen(
+    3000,
+    () => console.log('Server running on port 3000.')
+)
 
-                    res.send(result)
-                })
-        }
-    )
-})
+// Importing routes
+const questionRoutes = require('./routes/question')
+app.use('/question', questionRoutes)
 
-app.listen(3000, () => console.log('Server running on port 3000.'))
+//app.use(bodyParser.urlencoded({ extended: true }))
+//app.use(bodyParser.json())
