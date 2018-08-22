@@ -14,7 +14,6 @@ const addTest = () => {
         let question = {
             question: li.querySelector('.preg').textContent.replace(/^\d{1,2}. /, ''),
             answers: [...li.querySelectorAll('.resp')].reduce((a, b, i) => {
-                console.log(b.textContent)
                 a.push({
                     id: String.fromCharCode(97 + i),
                     answer: b.textContent.replace(/^\w\)\s/g, '')
@@ -54,15 +53,3 @@ addTest(); downloadTests();
 
 
 document.querySelector('.spr.boto_gen.bnou_t.ldr1').click();
-
-
-
-
-
-
-/*const nextTest = () => {
-    const nextTestId = parseInt(document.querySelector('.tit span').textContent.split(' ')[1]) + 1;
-    const url = `https://www.todotest.com/tests/test.asp?tip=3&t=${nextTestId}`;
-    window.location.replace(url);
-}
-nextTest();*/
