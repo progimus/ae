@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const schema = new Schema({
-    _id: Schema.Types.ObjectId,
     question: String,
     answers: [
         {
@@ -10,8 +9,8 @@ const schema = new Schema({
             answer: String
         }
     ],
-    correct: String,
-    image: Buffer
+    correctAnswer: String,
+    image: String
 })
 
 module.exports = mongoose.model('Question', schema)

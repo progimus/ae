@@ -1,0 +1,20 @@
+sudo apt-get update
+sudo apt-get upgrade
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+sudo mkdir /var/www
+sudo git clone https://github.com/progimus/ae
+sudo npm install
+sudo npm install -g pm2
+sudo pm2 start server.js
+
+sudo mongoexport --db ae --collection questions --out db.json
+sudo mongoimport --db ae --collection questions --file db.json

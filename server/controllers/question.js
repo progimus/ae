@@ -25,3 +25,46 @@ exports.findRandom = (req, res) => {
             })
     })
 }
+
+exports.create = (req, res) => {
+    const question = new Question(
+        {
+            question: req.body.question,
+            answers: req.body.answers,
+            correctAnswer: req.body.correctAnswer,
+            image: req.body.image
+        }
+    )
+
+    question.save((err) => {
+        if (err) throw err
+
+        res.send('Question inserted')
+    })
+}
+
+exports.createMany = (req, res) => {
+    req.body.questions.forEach(element => {
+        Question.findOneAndUpdate(
+            {
+                question: element.question,
+                answers: element.answers,
+                correctAnswer: element.correctAnswer
+            },
+            {
+                question: element.question,
+                answers: element.answers,
+                correctAnswer: element.correctAnswer,
+                image: element.image
+            },
+            {
+                upsert: true
+            },
+            (err) => {
+                if (err) throw err
+            }
+        )
+    })
+
+    res.send('Questions updated or inserted')
+}
