@@ -27,14 +27,12 @@ exports.findRandom = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    const question = new Question(
-        {
-            question: req.body.question,
-            answers: req.body.answers,
-            correctAnswer: req.body.correctAnswer,
-            image: req.body.image
-        }
-    )
+    const question = new Question({
+        question: req.body.question,
+        answers: req.body.answers,
+        correctAnswer: req.body.correctAnswer,
+        image: req.body.image
+    })
 
     question.save((err) => {
         if (err) throw err
@@ -45,6 +43,7 @@ exports.create = (req, res) => {
 
 exports.createMany = (req, res) => {
     req.body.questions.forEach(element => {
+
         Question.findOneAndUpdate(
             {
                 question: element.question,
@@ -53,7 +52,7 @@ exports.createMany = (req, res) => {
             },
             {
                 question: element.question,
-                answers: element.answers,
+                answers: [...element.answers],
                 correctAnswer: element.correctAnswer,
                 image: element.image
             },

@@ -145,7 +145,6 @@ const handleNext = async event => {
     const container = document.getElementById('container');
 
     if (test + 1 >= files.length) {
-        
         return;
     }
 
